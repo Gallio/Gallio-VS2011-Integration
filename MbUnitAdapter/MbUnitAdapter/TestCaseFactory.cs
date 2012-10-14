@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using Gallio.Common.Reflection;
 using Gallio.Model.Schema;
@@ -19,11 +20,28 @@ namespace TestPlatform.Gallio
 
         public TestCase GetTestCase(TestData testData)
         {
-            var testCase = new TestCase(testData.FullName, new Uri(GallioAdapter.ExecutorUri), GetSource(testData))
+            string displayName;
+
+            var fullName = testData.FullName;
+
+            var pos = fullName.LastIndexOf('/');
+
+            if (pos == -1)
+            {
+                displayName = testData.CodeReference.MemberName;
+            }
+            else
+            {
+                displayName = fullName.Substring(pos + 1);
+            }
+
+
+
+            var testCase = new TestCase(fullName, new Uri(GallioAdapter.ExecutorUri), GetSource(testData))
             {
                 CodeFilePath = testData.CodeLocation.Path,
                 LineNumber = testData.CodeLocation.Line,
-                DisplayName = testData.CodeReference.MemberName
+                DisplayName = displayName
             };
 
             testCase.SetPropertyValue(testIdProperty, testData.Id);

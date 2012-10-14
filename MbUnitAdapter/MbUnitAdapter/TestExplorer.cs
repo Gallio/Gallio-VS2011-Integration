@@ -12,6 +12,7 @@ using Gallio.Runtime.Logging;
 using Gallio.Runtime.ProgressMonitoring;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
+using Gallio.Common.Messaging.MessageSinks;
 
 namespace TestPlatform.Gallio
 {
@@ -92,7 +93,7 @@ namespace TestPlatform.Gallio
 
         private static bool NotMsTestOrNunit(string testFrameworkHandleId)
         {
-            return testFrameworkHandleId != "MSTestAdapter.TestFramework" || testFrameworkHandleId != "NUnitAdapter.TestFramework";
+            return testFrameworkHandleId != "MSTestAdapter.TestFramework";
         }
 
         private static ICodeElementInfo LoadAssembly(string source, ReflectionOnlyAssemblyLoader loader)
